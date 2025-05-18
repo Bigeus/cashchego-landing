@@ -1,36 +1,61 @@
+'use client'
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CreditCard, DollarSign, Shield, Smartphone } from "lucide-react"
+import { ArrowRight, BarChart2, Brain, CreditCard, DollarSign, Shield, Smartphone, MessageCircle, ArrowDown } from "lucide-react"
+import dynamic from "next/dynamic"
+import logo from "../app/favicon.ico"
+import { useEffect, useState } from "react"
+import DemoModal from "@/components/DemoModal"
 
 export default function Home() {
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
+  // Adicionando comportamento de smooth scroll ao carregar o componente
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = "smooth";
+    return () => {
+      document.documentElement.style.scrollBehavior = "auto";
+    };
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
+      <DemoModal
+        isOpen={isDemoModalOpen}
+        onClose={() => setIsDemoModalOpen(false)}
+      />
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex h-16 items-center">
           <div className="flex items-center gap-2">
-            <DollarSign className="h-6 w-6 text-emerald-500" />
-            <span className="text-xl font-bold">Cash Chego</span>
+            <Image src={logo} alt="logo" height={40} width={40} />
+            <span className="text-xl font-bold">
+              <span className="text-black">Cash</span>
+              <span className="text-amber-500">Chego</span>
+            </span>
           </div>
-          <nav className="hidden md:flex gap-6">
-            <Link href="#features" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+          {/* Centralizando a navegação */}
+          <nav className="hidden md:flex gap-6 mx-auto justify-center">
+            <Link href="#recursos" className="text-sm font-medium hover:text-amber-500 transition-colors">
               Recursos
             </Link>
-            <Link href="#how-it-works" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+            <Link href="#como-funciona" className="text-sm font-medium hover:text-amber-500 transition-colors">
               Como Funciona
             </Link>
-            <Link href="#testimonials" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+            <Link href="#depoimentos" className="text-sm font-medium hover:text-amber-500 transition-colors">
               Depoimentos
             </Link>
-            <Link href="#faq" className="text-sm font-medium hover:text-emerald-500 transition-colors">
-              FAQ
+            <Link href="#sobre-nos" className="text-sm font-medium hover:text-amber-500 transition-colors">
+              Sobre Nós
+            </Link>
+            <Link href="#fale-conosco" className="text-sm font-medium hover:text-amber-500 transition-colors">
+              Fale com a Hanna
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" className="hidden md:flex">
+          <div className="flex items-center gap-4 ml-auto">
+            {/* <Button variant="outline" className="hidden md:flex">
               Entrar
-            </Button>
-            <Button className="bg-emerald-500 hover:bg-emerald-600">Começar Agora</Button>
+            </Button> */}
+            {/* <Button className="bg-amber-500 hover:bg-amber-600">Começar Agora</Button> */}
           </div>
         </div>
       </header>
@@ -41,45 +66,26 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex flex-col justify-center space-y-4">
-                <div className="inline-block rounded-lg bg-emerald-100 px-3 py-1 text-sm text-emerald-700 w-fit">
-                  Solução financeira simplificada
+                <div className="inline-block rounded-lg bg-amber-500 px-3 py-1 text-sm text-black0 w-fit">
+                  Sistema financeiro para micro e pequenas empresas
                 </div>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Dinheiro rápido quando você mais precisa
+                  Simplifique a gestão financeira do seu negócio
                 </h1>
                 <p className="max-w-[600px] text-gray-500 md:text-xl">
-                  Cash Chego oferece empréstimos rápidos, seguros e sem burocracia. Receba o dinheiro na sua conta em
-                  minutos.
+                  O CashChego oferece controle financeiro simplificado com projeção de saldo, gerenciamento de fluxo de caixa e assistência por IA para micro e pequenas empresas.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600">
-                    Solicitar Empréstimo <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button onClick={() => setIsDemoModalOpen(true)} size="lg" className="bg-amber-500 hover:bg-amber-600">
+                    Começar Gratuitamente <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                  <Button size="lg" variant="outline">
-                    Saiba Mais
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => document.getElementById('fale-conosco')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Saiba Mais <ArrowDown className="h-4 w-4" />
                   </Button>
-                </div>
-                <div className="flex items-center gap-4 pt-4">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="inline-block h-8 w-8 rounded-full bg-gray-200 ring-2 ring-white" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-gray-500">
-                    <span className="font-medium">+10.000</span> clientes satisfeitos
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="relative w-full max-w-[500px] aspect-square">
-                  <Image
-                    src="/placeholder.svg?height=500&width=500"
-                    alt="Cash Chego App"
-                    width={500}
-                    height={500}
-                    className="rounded-2xl object-cover"
-                    priority
-                  />
                 </div>
               </div>
             </div>
@@ -87,45 +93,45 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="py-16 bg-gray-50">
+        <section id="recursos" className="py-16 bg-gray-50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-emerald-100 px-3 py-1 text-sm text-emerald-700">
+                <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-700">
                   Recursos
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Por que escolher o Cash Chego?</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Por que escolher o CashChego?</h2>
                 <p className="max-w-[700px] text-gray-500 md:text-xl">
-                  Oferecemos a melhor experiência para você obter o dinheiro que precisa de forma rápida e segura.
+                  Oferecemos as melhores ferramentas para que você gerencie as finanças do seu negócio de forma eficiente e inteligente.
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-emerald-100 p-3">
-                  <Smartphone className="h-6 w-6 text-emerald-500" />
+                <div className="rounded-full bg-amber-100 p-3">
+                  <Smartphone className="h-6 w-6 text-amber-500" />
                 </div>
-                <h3 className="text-xl font-bold">100% Digital</h3>
+                <h3 className="text-xl font-bold">Web e Mobile</h3>
                 <p className="text-center text-gray-500">
-                  Todo o processo é feito pelo aplicativo, sem necessidade de ir a uma agência.
+                  Acesse o sistema em qualquer lugar, seja no computador ou no celular, com sincronização em tempo real.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-emerald-100 p-3">
-                  <CreditCard className="h-6 w-6 text-emerald-500" />
+                <div className="rounded-full bg-amber-100 p-3">
+                  <BarChart2 className="h-6 w-6 text-amber-500" />
                 </div>
-                <h3 className="text-xl font-bold">Dinheiro Rápido</h3>
+                <h3 className="text-xl font-bold">Fluxo de Caixa</h3>
                 <p className="text-center text-gray-500">
-                  Receba o valor aprovado em sua conta em até 10 minutos após a aprovação.
+                  Controle entradas e saídas com visualizações claras e projeções de saldo para melhor planejamento.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-emerald-100 p-3">
-                  <Shield className="h-6 w-6 text-emerald-500" />
+                <div className="rounded-full bg-amber-100 p-3">
+                  <Brain className="h-6 w-6 text-amber-500" />
                 </div>
-                <h3 className="text-xl font-bold">Segurança Total</h3>
+                <h3 className="text-xl font-bold">Hanna AI</h3>
                 <p className="text-center text-gray-500">
-                  Seus dados são protegidos com a mais alta tecnologia de segurança.
+                  Nossa assistente virtual inteligente ajuda na análise de dados e gera insights para seu negócio.
                 </p>
               </div>
             </div>
@@ -133,90 +139,126 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-16">
+        <section id="como-funciona" className="py-16">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-emerald-100 px-3 py-1 text-sm text-emerald-700">
+                <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-700">
                   Processo Simples
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Como funciona</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Como Funciona</h2>
                 <p className="max-w-[700px] text-gray-500 md:text-xl">
-                  Obtenha seu empréstimo em apenas 3 passos simples
+                  Gerencie suas finanças em três etapas simples
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-3">
-              <div className="relative flex flex-col items-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white font-bold text-xl">
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-white font-bold text-xl">
                   1
                 </div>
-                <h3 className="text-xl font-bold">Cadastre-se</h3>
+                <h3 className="text-xl font-bold">Consulta</h3>
                 <p className="text-center text-gray-500">
-                  Preencha seus dados pessoais e financeiros no aplicativo Cash Chego.
+                  Consulte informações e otimize seu tempo com nossa <span className="text-amber-500 font-semibold">Hanna AI Assistente</span>.
                 </p>
-                {/* Connector line for desktop */}
-                <div className="absolute top-6 left-[calc(100%-12px)] h-0.5 w-full bg-emerald-200 hidden md:block" />
-              </div>
-              <div className="relative flex flex-col items-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white font-bold text-xl">
-                  2
-                </div>
-                <h3 className="text-xl font-bold">Solicite</h3>
-                <p className="text-center text-gray-500">
-                  Escolha o valor desejado e o prazo para pagamento que melhor se adapta a você.
-                </p>
-                {/* Connector line for desktop */}
-                <div className="absolute top-6 left-[calc(100%-12px)] h-0.5 w-full bg-emerald-200 hidden md:block" />
               </div>
               <div className="flex flex-col items-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white font-bold text-xl">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-white font-bold text-xl">
+                  2
+                </div>
+                <h3 className="text-xl font-bold">Análise</h3>
+                <p className="text-center text-gray-500">
+                  Utilize nossas ferramentas para analisar <span className="text-amber-500 font-semibold">valores de entradas e saídas</span> e gerar relatórios de suas vendas.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-white font-bold text-xl">
                   3
                 </div>
-                <h3 className="text-xl font-bold">Receba</h3>
+                <h3 className="text-xl font-bold">Inspirar</h3>
                 <p className="text-center text-gray-500">
-                  Após a aprovação, o dinheiro é transferido diretamente para sua conta bancária.
+                  Crie uma estratégia de negócios e visualize com base em dados e insights da <span className="text-amber-500 font-semibold">Hanna AI</span>.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section id="testimonials" className="py-16 bg-gray-50">
+        {/* Chatbot Section */}
+        <section id="fale-conosco" className="py-16 bg-amber-50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-emerald-100 px-3 py-1 text-sm text-emerald-700">
+                <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-700">
+                  Assistente Virtual
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Converse com a Hanna AI</h2>
+                <p className="max-w-[700px] text-gray-500 md:text-xl">
+                  Tire suas dúvidas, obtenha insights financeiros e receba ajuda personalizada da nossa assistente virtual inteligente
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-6 py-8">
+                <div className="rounded-full bg-amber-100 p-4">
+                  <MessageCircle className="h-12 w-12 text-amber-500" />
+                </div>
+                <p className="max-w-[600px] text-gray-600">
+                  A Hanna AI está sempre pronta para ajudar você com dúvidas sobre finanças, fluxo de caixa, relatórios e muito mais.
+                  Experimente agora mesmo e descubra como nossa assistente virtual pode facilitar a gestão do seu negócio!
+                </p>
+                <Link target="_blank" href={"https://cdn.botpress.cloud/webchat/v2.4/shareable.html?configUrl=https://files.bpcontent.cloud/2025/05/18/16/20250518161426-IH3N327B.json"}>
+                  <Button
+                    onClick={() => { }}
+                    size="lg"
+                    className="bg-amber-500 hover:bg-amber-600"
+                  >
+                    Conversar com a Hanna AI <MessageCircle className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section id="depoimentos" className="py-16 bg-gray-50">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-700">
                   Depoimentos
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">O que nossos clientes dizem</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">O que nossos clientes acham</h2>
                 <p className="max-w-[700px] text-gray-500 md:text-xl">
-                  Milhares de pessoas já utilizaram o Cash Chego para resolver suas necessidades financeiras
+                  Centenas de empreendedores já utilizam o CashChego para gerenciar suas finanças
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  name: "Carlos Silva",
-                  text: "Precisei de dinheiro para uma emergência médica e o Cash Chego me ajudou em menos de 1 hora. Processo super simples!",
+                  name: "Ana Souza",
+                  initials: "AS",
+                  text: "Essa experiência foi incrível! Nunca vi algo tão bem feito e funcional.",
                 },
                 {
-                  name: "Ana Oliveira",
-                  text: "Já utilizei outros aplicativos de empréstimo, mas o Cash Chego foi o mais rápido e com as melhores taxas. Recomendo!",
+                  name: "Carlos Ferreira",
+                  initials: "CF",
+                  text: "Muito intuitivo e fácil de usar. Me ajudou demais!",
                 },
                 {
-                  name: "Roberto Santos",
-                  text: "O atendimento ao cliente é excelente. Tive uma dúvida e fui prontamente atendido pelo chat. Muito satisfeito!",
+                  name: "Juliana Lima",
+                  initials: "JL",
+                  text: "Recomendo a todos! Atendimento ótimo e qualidade excepcional.",
                 },
               ].map((testimonial, i) => (
                 <div key={i} className="flex flex-col space-y-4 rounded-lg border p-6 shadow-sm">
                   <div className="flex items-center space-x-4">
-                    <div className="h-10 w-10 rounded-full bg-gray-200" />
+                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 font-semibold">
+                      {testimonial.initials}
+                    </div>
                     <div>
                       <h4 className="font-bold">{testimonial.name}</h4>
-                      <p className="text-sm text-gray-500">Cliente Cash Chego</p>
+                      <p className="text-sm text-gray-500">Empreendedor(a)</p>
                     </div>
                   </div>
                   <p className="text-gray-500">{testimonial.text}</p>
@@ -243,73 +285,52 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section id="faq" className="py-16">
+        {/* About Us Section */}
+        <section id="sobre-nos" className="py-16">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-emerald-100 px-3 py-1 text-sm text-emerald-700">
-                  Dúvidas Frequentes
+                <div className="inline-block rounded-lg bg-amber-100 px-3 py-1 text-sm text-amber-700">
+                  Sobre Nós
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Perguntas Frequentes</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Conheça o CashChego</h2>
                 <p className="max-w-[700px] text-gray-500 md:text-xl">
-                  Encontre respostas para as perguntas mais comuns sobre o Cash Chego
+                  Somos uma Startup que busca promover mais acessibilidade e velocidade no gerenciamento financeiro de pequenas empresas e negócios
                 </p>
               </div>
             </div>
             <div className="mx-auto max-w-3xl space-y-4 py-12">
-              {[
-                {
-                  question: "Quais são os requisitos para solicitar um empréstimo?",
-                  answer:
-                    "Para solicitar um empréstimo no Cash Chego, você precisa ser maior de 18 anos, ter uma conta bancária em seu nome, um smartphone com nosso aplicativo instalado e documentos de identificação válidos.",
-                },
-                {
-                  question: "Quanto tempo leva para o dinheiro ser depositado?",
-                  answer:
-                    "Após a aprovação do seu empréstimo, o dinheiro é depositado em sua conta bancária em até 10 minutos em dias úteis. Em finais de semana e feriados, o prazo pode ser um pouco maior.",
-                },
-                {
-                  question: "Quais são as taxas de juros aplicadas?",
-                  answer:
-                    "As taxas de juros variam de acordo com o valor solicitado, prazo de pagamento e seu histórico de crédito. Você poderá visualizar todas as taxas e o valor total a ser pago antes de confirmar a solicitação.",
-                },
-                {
-                  question: "Como faço para pagar o empréstimo?",
-                  answer:
-                    "O pagamento pode ser feito através de boleto bancário, débito automático ou transferência bancária. Todas as opções estão disponíveis no aplicativo Cash Chego.",
-                },
-                {
-                  question: "É possível antecipar o pagamento do empréstimo?",
-                  answer:
-                    "Sim, você pode antecipar o pagamento do seu empréstimo a qualquer momento e obter um desconto proporcional nos juros. Basta acessar a opção 'Antecipar Pagamento' no aplicativo.",
-                },
-              ].map((faq, i) => (
-                <div key={i} className="rounded-lg border p-6">
-                  <h3 className="text-lg font-bold">{faq.question}</h3>
-                  <p className="mt-2 text-gray-500">{faq.answer}</p>
-                </div>
-              ))}
+              <p className="text-gray-600">
+                Utilizando um sistema de controle de fluxo de caixa combinado com a acessibilidade de nossa Inteligência Artificial, a Hanna AI,
+                oferecemos uma solução completa para empreendedores. Nossa Assistente Virtual ajuda a desenvolver as principais funções, além de
+                analisar dados, ler tabelas e exibir relatórios que facilitam a tomada de decisões estratégicas.
+              </p>
+              <p className="text-gray-600">
+                Desenvolvido por uma equipe multidisciplinar, o CashChego foi criado para resolver os desafios de gestão financeira enfrentados
+                por 79% das micro e pequenas empresas que, segundo o SEBRAE, não dispõem de ferramentas adequadas para organização e controle de
+                suas finanças.
+              </p>
+              <p className="text-gray-600">
+                Nossa plataforma está disponível em versões Web e Mobile, com sincronização em tempo real, permitindo que você gerencie seu negócio
+                de qualquer lugar, a qualquer momento.
+              </p>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-emerald-500">
+        <section className="py-16 bg-gradient-to-t from-black to-amber-500">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                Pronto para resolver sua situação financeira?
+                Transforme sua experiência hoje mesmo!
               </h2>
               <p className="max-w-[700px] md:text-xl">
-                Baixe agora o aplicativo Cash Chego e tenha acesso a empréstimos rápidos e seguros.
+                Junte-se a centenas de pessoas que já estão aproveitando essa solução incrível. Não perca tempo!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button size="lg" className="bg-white text-emerald-500 hover:bg-gray-100">
-                  Baixar para Android
-                </Button>
-                <Button size="lg" className="bg-white text-emerald-500 hover:bg-gray-100">
-                  Baixar para iOS
+                <Button onClick={() => setIsDemoModalOpen(true)} size="lg" className="bg-white text-amber-500 hover:bg-gray-100">
+                  Quero Começar Agora 🚀
                 </Button>
               </div>
             </div>
@@ -322,77 +343,80 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <DollarSign className="h-6 w-6 text-emerald-500" />
-                <span className="text-xl font-bold">Cash Chego</span>
+                <Image src={logo} alt="logo" height={40} width={40} />
+                <span className="text-xl font-bold">
+                  <span className="text-black">Cash</span>
+                  <span className="text-amber-500">Chego</span>
+                </span>
               </div>
               <p className="text-sm text-gray-500">
-                Soluções financeiras rápidas e seguras para quando você mais precisa.
+                Sistema financeiro simplificado para micro e pequenas empresas.
               </p>
             </div>
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <h3 className="text-lg font-bold">Empresa</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#sobre-nos" className="text-sm text-gray-500 hover:text-amber-500">
                     Sobre nós
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Carreiras
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Imprensa
                   </Link>
                 </li>
               </ul>
-            </div>
-            <div className="space-y-4">
+            </div> */}
+            {/*  <div className="space-y-4">
               <h3 className="text-lg font-bold">Recursos</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Guias
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Ajuda e Suporte
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className="space-y-4">
-              <h3 className="text-lg font-bold">Legal</h3>
+              <h3 className="text-lg font-bold">Entre em contato em:</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
+                    contato@cashchego.com.br
+                  </Link>
+                </li>
+                {/*   <li>
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Termos de Uso
                   </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
+                </li> */}
+                {/* <li>
+                  <Link href="#" className="text-sm text-gray-500 hover:text-amber-500">
                     Política de Privacidade
                   </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-sm text-gray-500 hover:text-emerald-500">
-                    Política de Cookies
-                  </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
           <div className="mt-12 border-t pt-8">
             <p className="text-center text-sm text-gray-500">
-              © {new Date().getFullYear()} Cash Chego. Todos os direitos reservados.
+              © {new Date().getFullYear()} CashChego Hanna Group.
             </p>
           </div>
         </div>
