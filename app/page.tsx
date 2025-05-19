@@ -65,8 +65,9 @@ export default function Home() {
         <section className="py-20 md:py-28">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+              {/* Coluna da esquerda: texto */}
               <div className="flex flex-col justify-center space-y-4">
-                <div className="inline-block rounded-lg bg-amber-500 px-3 py-1 text-sm text-black0 w-fit">
+                <div className="inline-block rounded-lg bg-amber-500 px-3 py-1 text-sm text-black w-fit">
                   Sistema financeiro para micro e pequenas empresas
                 </div>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -86,6 +87,21 @@ export default function Home() {
                   >
                     Saiba Mais <ArrowDown className="h-4 w-4" />
                   </Button>
+                </div>
+              </div>
+              {/* Coluna da direita: imagem */}
+              <div className="relative mt-8 lg:mt-0 flex justify-center lg:justify-start overflow-visible z-10">
+                <div className="relative overflow-hidden rounded-xl shadow-2xl w-full md:w-[120%] lg:w-[160%] xl:w-[180%] 2xl:w-[200%] lg:-ml-12 xl:-ml-20 2xl:-ml-24 lg:-mr-10 xl:-mr-16 2xl:-mr-20 transform transition-all duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/20 to-transparent opacity-70 mix-blend-overlay"></div>
+                  <Image
+                    src="/dashboard.png"
+                    alt="Dashboard do CashChego"
+                    width={1500}
+                    height={1000}
+                    className="w-full h-auto object-cover"
+                    priority
+                    quality={100}
+                  />
                 </div>
               </div>
             </div>
