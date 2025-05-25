@@ -221,7 +221,7 @@ export default function Home() {
                   A Hanna AI está sempre pronta para ajudar você com dúvidas sobre finanças, fluxo de caixa, relatórios e muito mais.
                   Experimente agora mesmo e descubra como nossa assistente virtual pode facilitar a gestão do seu negócio!
                 </p>
-                <Link target="_blank" href={"https://cdn.botpress.cloud/webchat/v2.4/shareable.html?configUrl=https://files.bpcontent.cloud/2025/05/18/16/20250518161426-IH3N327B.json"}>
+                <Link target="_blank" href={"https://cdn.botpress.cloud/webchat/v2.4/shareable.html?configUrl=https://files.bpcontent.cloud/2025/05/25/17/20250525174111-1VS10LJI.json"}>
                   <Button
                     onClick={() => { }}
                     size="lg"
